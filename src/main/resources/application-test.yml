@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://tiwtiw-database/test_application
+      database: test_application
+
