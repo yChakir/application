@@ -1,14 +1,16 @@
 package ma.tiwtiw.application.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import ma.tiwtiw.application.model.Application;
 import ma.tiwtiw.application.exception.ResourceNotFoundException;
+import ma.tiwtiw.application.model.Application;
 import ma.tiwtiw.application.repository.ApplicationRepository;
 import ma.tiwtiw.application.service.ApplicationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -67,7 +69,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public Iterable<Application> findAll() {
+    public List<Application> findAll() {
         return applicationRepository.findAll();
     }
 
