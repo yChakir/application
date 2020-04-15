@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ApplicationDTO {
 
-    private String id;
-    private String name;
-    private String description;
-    private String version;
+  private String id;
+  private String name;
+  private String description;
+  private String version;
 }

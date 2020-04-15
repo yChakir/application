@@ -1,5 +1,7 @@
 package ma.tiwtiw.application.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import ma.tiwtiw.application.dto.ApplicationDTO;
 import ma.tiwtiw.application.model.Application;
@@ -18,85 +20,83 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("applications")
 public class ApplicationController {
 
-    private final ApplicationService applicationService;
+  private final ApplicationService applicationService;
 
-    private final ConversionService conversionService;
+  private final ConversionService conversionService;
 
-    @PostMapping
-    public ResponseEntity save(@RequestBody ApplicationDTO dto) {
-        final Application application = conversionService.convert(dto, Application.class);
+  @PostMapping
+  public ResponseEntity save(@RequestBody ApplicationDTO dto) {
+    final Application application = conversionService.convert(dto, Application.class);
 
-        applicationService.save(application);
+    applicationService.save(application);
 
-        return ResponseEntity.created(null).build();
-    }
+    return ResponseEntity.created(null).build();
+  }
 
-    @PutMapping("{id}")
-    public ResponseEntity update(@PathVariable String id, @RequestBody ApplicationDTO dto) {
-        final Application application = conversionService.convert(dto, Application.class);
+  @PutMapping("{id}")
+  public ResponseEntity update(@PathVariable String id, @RequestBody ApplicationDTO dto) {
+    final Application application = conversionService.convert(dto, Application.class);
 
-        applicationService.update(id, application);
+    applicationService.update(id, application);
 
-        return ResponseEntity.noContent().build();
-    }
+    return ResponseEntity.noContent().build();
+  }
 
-    @PatchMapping("{id}")
-    public ResponseEntity patch(@PathVariable String id, @RequestBody ApplicationDTO dto) {
-        final Application application = conversionService.convert(dto, Application.class);
+  @PatchMapping("{id}")
+  public ResponseEntity patch(@PathVariable String id, @RequestBody ApplicationDTO dto) {
+    final Application application = conversionService.convert(dto, Application.class);
 
-        applicationService.patch(id, application);
+    applicationService.patch(id, application);
 
-        return ResponseEntity.noContent().build();
-    }
+    return ResponseEntity.noContent().build();
+  }
 
-    @GetMapping("{id}")
-    public ResponseEntity findById(@PathVariable String id) {
-        final Application application = applicationService.findById(id);
+  @GetMapping("{id}")
+  public ResponseEntity findById(@PathVariable String id) {
+    final Application application = applicationService.findById(id);
 
-        final ApplicationDTO dto = conversionService.convert(application, ApplicationDTO.class);
+    final ApplicationDTO dto = conversionService.convert(application, ApplicationDTO.class);
 
-        return ResponseEntity.ok(dto);
-    }
+    return ResponseEntity.ok(dto);
+  }
 
-    @GetMapping("{id}/exists")
-    public ResponseEntity existsById(@PathVariable String id) {
-        final boolean exists = applicationService.existsById(id);
+  @GetMapping("{id}/exists")
+  public ResponseEntity existsById(@PathVariable String id) {
+    final boolean exists = applicationService.existsById(id);
 
-        return ResponseEntity.ok(exists);
-    }
+    return ResponseEntity.ok(exists);
+  }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity deleteById(@PathVariable String id) {
-        applicationService.deleteById(id);
+  @DeleteMapping("{id}")
+  public ResponseEntity deleteById(@PathVariable String id) {
+    applicationService.deleteById(id);
 
-        return ResponseEntity.noContent().build();
-    }
+    return ResponseEntity.noContent().build();
+  }
 
-    @GetMapping
-    public ResponseEntity findAll() {
-        final List<Application> applications = applicationService.findAll();
+  @GetMapping
+  public ResponseEntity findAll() {
+    final List<Application> applications = applicationService.findAll();
 
-        final List<ApplicationDTO> dtos = applications.stream()
-                .map(application -> conversionService.convert(application, ApplicationDTO.class))
-                .collect(Collectors.toList());
+    final List<ApplicationDTO> dtos = applications.stream()
+        .map(application -> conversionService.convert(application, ApplicationDTO.class))
+        .collect(Collectors.toList());
 
-        return ResponseEntity.ok(dtos);
-    }
+    return ResponseEntity.ok(dtos);
+  }
 
-    @GetMapping("getPage")
-    public ResponseEntity findAll(Pageable pageable) {
-        final Page<Application> applications = applicationService.findAll(pageable);
+  @GetMapping("getPage")
+  public ResponseEntity findAll(Pageable pageable) {
+    final Page<Application> applications = applicationService.findAll(pageable);
 
-        final Page<ApplicationDTO> page = applications.map(application -> conversionService.convert(application, ApplicationDTO.class));
+    final Page<ApplicationDTO> page = applications
+        .map(application -> conversionService.convert(application, ApplicationDTO.class));
 
-        return ResponseEntity.ok(page);
-    }
+    return ResponseEntity.ok(page);
+  }
 }

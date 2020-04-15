@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class DtoToApplicationConverter implements Converter<ApplicationDTO, Application> {
 
-    @Override
-    public Application convert(ApplicationDTO dto) {
-        return Application.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .version(dto.getVersion())
-                .build();
-    }
+  @Override
+  public Application convert(ApplicationDTO dto) {
+    return Application.builder()
+        .id(dto.getId())
+        .name(dto.getName())
+        .description(dto.getDescription())
+        .version(dto.getVersion())
+        .build();
+  }
 }

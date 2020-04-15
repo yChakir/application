@@ -1,5 +1,6 @@
 package ma.tiwtiw.application.service.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import ma.tiwtiw.application.exception.ResourceNotFoundException;
 import ma.tiwtiw.application.model.Application;
@@ -9,8 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
