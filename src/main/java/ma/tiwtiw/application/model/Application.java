@@ -20,4 +20,6 @@ public class Application {
     private String name;
 
     private String description;
+
+    private String version;
 }

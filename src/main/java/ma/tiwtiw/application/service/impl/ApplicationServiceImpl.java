@@ -29,6 +29,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         application.setName(object.getName());
         application.setDescription(object.getDescription());
+        application.setVersion(object.getVersion());
 
         return applicationRepository.save(application);
     }
@@ -43,6 +44,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         if (!StringUtils.isEmpty(object.getDescription())) {
             application.setDescription(object.getDescription());
+        }
+
+        if (!StringUtils.isEmpty(object.getVersion())) {
+            application.setVersion(object.getVersion());
         }
 
         return applicationRepository.save(application);

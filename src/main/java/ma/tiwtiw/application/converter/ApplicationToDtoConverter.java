@@ -14,6 +14,7 @@ public class ApplicationToDtoConverter implements Converter<Application, Applica
                 .id(application.getId())
                 .name(application.getName())
                 .description(application.getDescription())
+                .version(application.getVersion())
                 .build();
     }
 }

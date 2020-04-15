@@ -14,6 +14,7 @@ public class DtoToApplicationConverter implements Converter<ApplicationDTO, Appl
                 .id(dto.getId())
                 .name(dto.getName())
                 .description(dto.getDescription())
+                .version(dto.getVersion())
                 .build();
     }
 }
