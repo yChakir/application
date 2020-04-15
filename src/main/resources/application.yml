@@ -3,5 +3,6 @@ server:
 
 logging:
   level:
-    org.springframework.web: ERROR
+    org.springframework.web: INFO
+    ma.tiwtiw: DEBUG
   file: ./log/application.log
