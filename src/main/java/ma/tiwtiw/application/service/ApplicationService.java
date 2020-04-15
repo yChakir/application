@@ -7,21 +7,21 @@ import org.springframework.data.domain.Pageable;
 
 public interface ApplicationService {
 
-    Application save(Application object);
+  Application save(Application object);
 
-    Application update(String id, Application object);
+  Application update(String id, Application object);
 
-    Application patch(String id, Application object);
+  Application patch(String id, Application object);
 
-    Application findById(String id);
+  Application findById(String id);
 
-    boolean existsById(String id);
+  boolean existsById(String id);
 
-    void deleteById(String id);
+  void deleteById(String id);
 
-    void delete(Application object);
+  void delete(Application object);
 
-    List<Application> findAll();
+  List<Application> findAll();
 
-    Page<Application> findAll(Pageable pageable);
+  Page<Application> findAll(Pageable pageable);
 }

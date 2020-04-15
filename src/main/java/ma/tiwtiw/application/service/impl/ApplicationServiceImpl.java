@@ -15,70 +15,70 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
 
-    private final ApplicationRepository applicationRepository;
+  private final ApplicationRepository applicationRepository;
 
-    @Override
-    public Application save(Application object) {
-        return applicationRepository.save(object);
+  @Override
+  public Application save(Application object) {
+    return applicationRepository.save(object);
+  }
+
+  @Override
+  public Application update(String id, Application object) {
+    Application application = findById(id);
+
+    application.setName(object.getName());
+    application.setDescription(object.getDescription());
+    application.setVersion(object.getVersion());
+
+    return applicationRepository.save(application);
+  }
+
+  @Override
+  public Application patch(String id, Application object) {
+    Application application = findById(id);
+
+    if (!StringUtils.isEmpty(object.getName())) {
+      application.setName(object.getName());
     }
 
-    @Override
-    public Application update(String id, Application object) {
-        Application application = findById(id);
-
-        application.setName(object.getName());
-        application.setDescription(object.getDescription());
-        application.setVersion(object.getVersion());
-
-        return applicationRepository.save(application);
+    if (!StringUtils.isEmpty(object.getDescription())) {
+      application.setDescription(object.getDescription());
     }
 
-    @Override
-    public Application patch(String id, Application object) {
-        Application application = findById(id);
-
-        if (!StringUtils.isEmpty(object.getName())) {
-            application.setName(object.getName());
-        }
-
-        if (!StringUtils.isEmpty(object.getDescription())) {
-            application.setDescription(object.getDescription());
-        }
-
-        if (!StringUtils.isEmpty(object.getVersion())) {
-            application.setVersion(object.getVersion());
-        }
-
-        return applicationRepository.save(application);
+    if (!StringUtils.isEmpty(object.getVersion())) {
+      application.setVersion(object.getVersion());
     }
 
-    @Override
-    public Application findById(String id) {
-        return applicationRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
-    }
+    return applicationRepository.save(application);
+  }
 
-    @Override
-    public boolean existsById(String id) {
-        return applicationRepository.existsById(id);
-    }
+  @Override
+  public Application findById(String id) {
+    return applicationRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+  }
 
-    @Override
-    public void deleteById(String id) {
-        applicationRepository.deleteById(id);
-    }
+  @Override
+  public boolean existsById(String id) {
+    return applicationRepository.existsById(id);
+  }
 
-    @Override
-    public void delete(Application object) {
-        applicationRepository.delete(object);
-    }
+  @Override
+  public void deleteById(String id) {
+    applicationRepository.deleteById(id);
+  }
 
-    @Override
-    public List<Application> findAll() {
-        return applicationRepository.findAll();
-    }
+  @Override
+  public void delete(Application object) {
+    applicationRepository.delete(object);
+  }
 
-    @Override
-    public Page<Application> findAll(Pageable pageable) {
-        return applicationRepository.findAll(pageable);
-    }
+  @Override
+  public List<Application> findAll() {
+    return applicationRepository.findAll();
+  }
+
+  @Override
+  public Page<Application> findAll(Pageable pageable) {
+    return applicationRepository.findAll(pageable);
+  }
 }
