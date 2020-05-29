@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import ma.tiwtiw.application.dto.ApplicationDTO;
 import ma.tiwtiw.application.model.Application;
 import ma.tiwtiw.application.service.ApplicationService;
-import org.springframework.core.convert.ConversionService;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +27,11 @@ public class ApplicationController {
 
   private final ApplicationService applicationService;
 
-  private final ConversionService conversionService;
+  private final ModelMapper modelMapper;
 
   @PostMapping
   public ResponseEntity save(@RequestBody ApplicationDTO dto) {
-    final Application application = conversionService.convert(dto, Application.class);
+    final Application application = modelMapper.map(dto, Application.class);
 
     applicationService.save(application);
 
@@ -40,7 +40,7 @@ public class ApplicationController {
 
   @PutMapping("{id}")
   public ResponseEntity update(@PathVariable String id, @RequestBody ApplicationDTO dto) {
-    final Application application = conversionService.convert(dto, Application.class);
+    final Application application = modelMapper.map(dto, Application.class);
 
     applicationService.update(id, application);
 
@@ -49,7 +49,7 @@ public class ApplicationController {
 
   @PatchMapping("{id}")
   public ResponseEntity patch(@PathVariable String id, @RequestBody ApplicationDTO dto) {
-    final Application application = conversionService.convert(dto, Application.class);
+    final Application application = modelMapper.map(dto, Application.class);
 
     applicationService.patch(id, application);
 
@@ -60,7 +60,7 @@ public class ApplicationController {
   public ResponseEntity findById(@PathVariable String id) {
     final Application application = applicationService.findById(id);
 
-    final ApplicationDTO dto = conversionService.convert(application, ApplicationDTO.class);
+    final ApplicationDTO dto = modelMapper.map(application, ApplicationDTO.class);
 
     return ResponseEntity.ok(dto);
   }
@@ -84,7 +84,7 @@ public class ApplicationController {
     final List<Application> applications = applicationService.findAll();
 
     final List<ApplicationDTO> dtos = applications.stream()
-        .map(application -> conversionService.convert(application, ApplicationDTO.class))
+        .map(application -> modelMapper.map(application, ApplicationDTO.class))
         .collect(Collectors.toList());
 
     return ResponseEntity.ok(dtos);
@@ -95,7 +95,7 @@ public class ApplicationController {
     final Page<Application> applications = applicationService.findAll(pageable);
 
     final Page<ApplicationDTO> page = applications
-        .map(application -> conversionService.convert(application, ApplicationDTO.class));
+        .map(application -> modelMapper.map(application, ApplicationDTO.class));
 
     return ResponseEntity.ok(page);
   }
