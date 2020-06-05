@@ -1,102 +1,36 @@
 package ma.tiwtiw.application.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import ma.tiwtiw.application.dto.ApplicationDTO;
 import ma.tiwtiw.application.model.Application;
 import ma.tiwtiw.application.service.ApplicationService;
+import ma.tiwtiw.core.controller.impl.BaseRestController;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("applications")
-public class ApplicationController {
+public class ApplicationController extends BaseRestController<Application, ApplicationDTO, String> {
 
   private final ApplicationService applicationService;
 
   private final ModelMapper modelMapper;
 
-  @PostMapping
-  public ResponseEntity save(@RequestBody ApplicationDTO dto) {
-    final Application application = modelMapper.map(dto, Application.class);
-
-    applicationService.save(application);
-
-    return ResponseEntity.created(null).build();
+  public ApplicationController(ApplicationService applicationService,
+      ModelMapper modelMapper) {
+    super(Application.class, ApplicationDTO.class);
+    this.applicationService = applicationService;
+    this.modelMapper = modelMapper;
   }
 
-  @PutMapping("{id}")
-  public ResponseEntity update(@PathVariable String id, @RequestBody ApplicationDTO dto) {
-    final Application application = modelMapper.map(dto, Application.class);
 
-    applicationService.update(id, application);
-
-    return ResponseEntity.noContent().build();
+  @Override
+  protected ApplicationService getService() {
+    return applicationService;
   }
 
-  @PatchMapping("{id}")
-  public ResponseEntity patch(@PathVariable String id, @RequestBody ApplicationDTO dto) {
-    final Application application = modelMapper.map(dto, Application.class);
-
-    applicationService.patch(id, application);
-
-    return ResponseEntity.noContent().build();
-  }
-
-  @GetMapping("{id}")
-  public ResponseEntity findById(@PathVariable String id) {
-    final Application application = applicationService.findById(id);
-
-    final ApplicationDTO dto = modelMapper.map(application, ApplicationDTO.class);
-
-    return ResponseEntity.ok(dto);
-  }
-
-  @GetMapping("{id}/exists")
-  public ResponseEntity existsById(@PathVariable String id) {
-    final boolean exists = applicationService.existsById(id);
-
-    return ResponseEntity.ok(exists);
-  }
-
-  @DeleteMapping("{id}")
-  public ResponseEntity deleteById(@PathVariable String id) {
-    applicationService.deleteById(id);
-
-    return ResponseEntity.noContent().build();
-  }
-
-  @GetMapping
-  public ResponseEntity findAll() {
-    final List<Application> applications = applicationService.findAll();
-
-    final List<ApplicationDTO> dtos = applications.stream()
-        .map(application -> modelMapper.map(application, ApplicationDTO.class))
-        .collect(Collectors.toList());
-
-    return ResponseEntity.ok(dtos);
-  }
-
-  @GetMapping("getPage")
-  public ResponseEntity findAll(Pageable pageable) {
-    final Page<Application> applications = applicationService.findAll(pageable);
-
-    final Page<ApplicationDTO> page = applications
-        .map(application -> modelMapper.map(application, ApplicationDTO.class));
-
-    return ResponseEntity.ok(page);
+  @Override
+  protected ModelMapper getMapper() {
+    return modelMapper;
   }
 }

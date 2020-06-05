@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import ma.tiwtiw.core.model.BaseModel;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -12,10 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 @NoArgsConstructor
 @AllArgsConstructor
-public class Application {
-
-  @Id
-  private String id;
+public class Application extends BaseModel<String> {
 
   private String name;
 
